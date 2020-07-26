@@ -1,9 +1,8 @@
 package com.gloriousoft.reservationservices;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/reservations")
@@ -16,7 +15,8 @@ public class ReservationWebServices {
     }
 
     @GetMapping
-    public Iterable<Reservation> getAllReservations() {
+    public Iterable<Reservation> getReservations(@RequestParam(name = "date", required = false) Date date) {
+        if (null != date) return this.repository.findAllByDate(date);
         return this.repository.findAll();
     }
 
